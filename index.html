@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Исследовательское досье для 45 муралов ЖК «Ганимед»: математика, экономика, кузнечное дело, мода и транспорт — прошлое, настоящее и будущее.">
+  <title>KSmelova · Темы муралов «Ганимед»</title>
+  <style>
+    :root {
+      --paper: #f1eee6;
+      --paper-2: #e5e0d4;
+      --card: #fbf9f4;
+      --ink: #1d211f;
+      --ink-2: #4c514d;
+      --muted: #767b75;
+      --line: #c8c2b5;
+      --red: #bd3e2d;
+      --red-dark: #76291f;
+      --past: #b76a35;
+      --present: #2f716d;
+      --future: #4c5791;
+      --white: #fff;
+      --shadow: 0 14px 38px rgba(29, 33, 31, .08);
+      --display: "Arial Narrow", "Roboto Condensed", "Segoe UI", sans-serif;
+      --body: "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(29, 33, 31, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29, 33, 31, .035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 24px 24px;
+      font-family: var(--body);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .shell { width: min(1480px, calc(100% - 32px)); margin: 0 auto; }
+
+    .hero {
+      min-height: 620px;
+      color: #f8f3e9;
+      background:
+        radial-gradient(circle at 82% 22%, rgba(189, 62, 45, .62), transparent 24%),
+        linear-gradient(120deg, rgba(255,255,255,.055) 1px, transparent 1px),
+        linear-gradient(30deg, rgba(255,255,255,.035) 1px, transparent 1px),
+        #171b19;
+      background-size: auto, 42px 42px, 42px 42px, auto;
+      border-bottom: 8px solid var(--red);
+      display: flex;
+      align-items: flex-end;
+      padding: 64px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "45";
+      position: absolute;
+      right: -28px;
+      bottom: -140px;
+      font: 900 clamp(300px, 41vw, 620px)/1 var(--display);
+      letter-spacing: -.09em;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255,255,255,.11);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(300px, .7fr);
+      gap: clamp(36px, 7vw, 110px);
+      align-items: end;
+    }
+    .kicker, .era-label, .theme-index, .micro, .control-label, .source-id {
+      font-family: var(--display);
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .kicker { color: #e9997e; font-size: 13px; }
+    h1 {
+      margin: 18px 0 22px;
+      max-width: 980px;
+      font: 900 clamp(48px, 8vw, 118px)/.88 var(--display);
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+    }
+    .hero-lead { max-width: 810px; font-size: clamp(17px, 1.7vw, 24px); color: #d7d5cc; }
+    .hero-note {
+      border-top: 1px solid rgba(255,255,255,.28);
+      padding-top: 18px;
+      color: #bbbdb7;
+      font-size: 14px;
+    }
+    .hero-note strong { display: block; color: #fff; font-size: 17px; margin-bottom: 5px; }
+    .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.18); }
+    .hero-stat { padding: 18px; min-height: 115px; background: rgba(23,27,25,.92); }
+    .hero-stat b { display: block; font: 900 42px/1 var(--display); color: #fff; }
+    .hero-stat span { color: #aeb1ab; font-size: 13px; }
+
+    .controls-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241,238,230,.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .controls {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      flex-wrap: wrap;
+    }
+    .brand { margin-right: auto; font: 900 15px/1 var(--display); letter-spacing: .09em; text-transform: uppercase; }
+    .brand span { color: var(--red); }
+    .search {
+      width: min(290px, 100%);
+      border: 1px solid var(--line);
+      background: var(--card);
+      padding: 9px 12px;
+      border-radius: 0;
+      color: var(--ink);
+    }
+    .search:focus { outline: 2px solid var(--red); outline-offset: 1px; }
+    .filter, .action {
+      border: 1px solid var(--line);
+      background: transparent;
+      padding: 9px 12px;
+      cursor: pointer;
+      font: 800 12px/1 var(--display);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .filter:hover, .action:hover { background: var(--paper-2); }
+    .filter.active { color: var(--white); border-color: var(--ink); background: var(--ink); }
+    .filter[data-era="past"].active { background: var(--past); border-color: var(--past); }
+    .filter[data-era="present"].active { background: var(--present); border-color: var(--present); }
+    .filter[data-era="future"].active { background: var(--future); border-color: var(--future); }
+
+    main { padding: 54px 0 90px; }
+    .method {
+      display: grid;
+      grid-template-columns: minmax(220px, .55fr) minmax(0, 1.45fr);
+      gap: 34px;
+      padding: clamp(24px, 4vw, 48px);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 26px;
+    }
+    .method h2, .section-title { margin: 0; font: 900 clamp(32px, 5vw, 68px)/.96 var(--display); letter-spacing: -.04em; text-transform: uppercase; }
+    .method-copy { columns: 2; column-gap: 34px; color: var(--ink-2); }
+    .method-copy p { margin: 0 0 14px; break-inside: avoid; }
+    .method-rule { border-left: 4px solid var(--red); padding-left: 15px; font-weight: 700; color: var(--ink); }
+
+    .theme-nav {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      margin: 26px 0 70px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+    .theme-nav a { padding: 18px; background: var(--card); text-decoration: none; }
+    .theme-nav a:hover { color: var(--red); background: #fff; }
+    .theme-nav span { display: block; color: var(--muted); font: 800 11px/1 var(--display); letter-spacing: .12em; margin-bottom: 7px; }
+    .theme-nav b { font: 900 clamp(15px, 1.5vw, 21px)/1 var(--display); text-transform: uppercase; }
+
+    .theme { scroll-margin-top: 98px; margin-bottom: 100px; }
+    .theme[hidden], .era[hidden], .mural[hidden] { display: none !important; }
+    .theme-head {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 28px;
+      align-items: end;
+      border-top: 5px solid var(--ink);
+      padding: 24px 0 30px;
+    }
+    .theme-index { font-size: 70px; line-height: .8; color: var(--red); }
+    .theme-head h2 { margin: 0 0 7px; font: 900 clamp(44px, 6vw, 86px)/.9 var(--display); letter-spacing: -.055em; text-transform: uppercase; }
+    .theme-line { color: var(--muted); font-size: 15px; }
+    .theme-thesis { color: var(--ink-2); font-size: 16px; }
+    .theme-thesis strong { color: var(--ink); }
+    .palette { display: flex; height: 7px; margin-top: 16px; }
+    .palette i { flex: 1; }
+
+    .era { margin-top: 32px; scroll-margin-top: 96px; }
+    .era-head { display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: start; margin-bottom: 12px; }
+    .era-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; }
+    .era-label::before { content: ""; width: 26px; height: 9px; background: var(--past); }
+    .era[data-era="present"] .era-label::before { background: var(--present); }
+    .era[data-era="future"] .era-label::before { background: var(--future); }
+    .era-intro { color: var(--muted); font-size: 14px; }
+
+    .mural-list { border-top: 1px solid var(--line); }
+    .mural { border-bottom: 1px solid var(--line); background: rgba(251,249,244,.55); }
+    .mural[open] { background: var(--card); box-shadow: var(--shadow); margin: 0 -10px; padding: 0 10px; position: relative; z-index: 1; }
+    .mural summary {
+      display: grid;
+      grid-template-columns: 86px minmax(240px, .8fr) minmax(260px, 1.2fr) 150px 24px;
+      gap: 18px;
+      align-items: center;
+      padding: 24px 0;
+      list-style: none;
+      cursor: pointer;
+    }
+    .mural summary::-webkit-details-marker { display: none; }
+    .mural summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .mural-no { font: 900 32px/1 var(--display); color: var(--past); }
+    .mural[data-era="present"] .mural-no { color: var(--present); }
+    .mural[data-era="future"] .mural-no { color: var(--future); }
+    .mural-title { font: 900 clamp(20px, 2vw, 29px)/1.05 var(--display); text-transform: uppercase; letter-spacing: -.02em; }
+    .mural-thesis { color: var(--ink-2); }
+    .mural-date { color: var(--muted); font: 800 12px/1.25 var(--display); letter-spacing: .08em; text-transform: uppercase; }
+    .plus { width: 19px; height: 19px; position: relative; }
+    .plus::before, .plus::after { content: ""; position: absolute; background: var(--ink); left: 0; top: 9px; width: 19px; height: 1px; }
+    .plus::after { transform: rotate(90deg); transition: transform .18s ease; }
+    .mural[open] .plus::after { transform: rotate(0); }
+    .detail { padding: 2px 0 34px 104px; }
+    .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .detail-block { background: var(--card); padding: 20px; }
+    .micro { display: block; color: var(--muted); font-size: 10px; margin-bottom: 9px; }
+    .detail-block p { margin: 0; color: var(--ink-2); font-size: 14px; }
+    .detail-block.russia { border-top: 4px solid var(--red); }
+    .plots { margin-top: 16px; padding: 22px; color: #f4f1e9; background: var(--ink); }
+    .plots-head { display: flex; justify-content: space-between; gap: 20px; align-items: baseline; margin-bottom: 16px; }
+    .plots-head h4 { margin: 0; font: 900 21px/1 var(--display); text-transform: uppercase; }
+    .plots-head span { color: #9fa49f; font-size: 12px; }
+    .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .plot { border-top: 1px solid rgba(255,255,255,.25); padding-top: 13px; color: #cfd2cd; font-size: 13px; }
+    .plot b { display: block; color: #fff; font-family: var(--display); text-transform: uppercase; margin-bottom: 5px; }
+    .refs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+    .ref { display: inline-flex; text-decoration: none; color: var(--ink-2); border: 1px solid var(--line); background: var(--paper); padding: 5px 8px; font-size: 11px; }
+    .ref:hover { color: var(--red); border-color: var(--red); }
+
+    .empty { display: none; text-align: center; padding: 60px 20px; border: 1px dashed var(--line); color: var(--muted); }
+    .empty.visible { display: block; }
+
+    .sources { padding: clamp(28px, 5vw, 58px); background: var(--ink); color: #e8e5dd; border-top: 8px solid var(--red); }
+    .sources-head { display: grid; grid-template-columns: .7fr 1.3fr; gap: 30px; margin-bottom: 35px; }
+    .sources h2 { margin: 0; font: 900 clamp(38px, 5vw, 72px)/.92 var(--display); letter-spacing: -.04em; text-transform: uppercase; }
+    .sources-head p { margin: 0; color: #adb1ab; max-width: 760px; }
+    .source-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,.18); }
+    .source-card { display: block; min-height: 135px; padding: 17px; color: #d5d7d2; background: #202522; text-decoration: none; }
+    .source-card:hover { background: #2b312d; }
+    .source-id { color: #e9997e; font-size: 10px; }
+    .source-card b { display: block; color: #fff; margin: 8px 0 5px; line-height: 1.25; }
+    .source-card span { font-size: 12px; color: #9ea39e; }
+
+    footer { padding: 24px 0 55px; color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1050px) {
+      .hero-grid, .theme-head, .sources-head { grid-template-columns: 1fr; }
+      .hero { min-height: 700px; }
+      .hero-stats { max-width: 560px; }
+      .theme-index { font-size: 38px; }
+      .theme-nav { grid-template-columns: repeat(2, 1fr); }
+      .mural summary { grid-template-columns: 60px minmax(200px, .8fr) minmax(220px, 1.2fr) 110px 20px; }
+      .detail { padding-left: 78px; }
+      .source-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 1480px); }
+      .hero { min-height: 760px; padding-top: 36px; }
+      .hero::after { opacity: .45; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .controls { align-items: stretch; }
+      .brand { width: 100%; margin-bottom: 4px; }
+      .search { width: 100%; }
+      .method { grid-template-columns: 1fr; }
+      .method-copy { columns: 1; }
+      .theme-nav { grid-template-columns: 1fr; }
+      .era-head { grid-template-columns: 1fr; gap: 5px; }
+      .mural summary { grid-template-columns: 48px minmax(0, 1fr) 20px; gap: 12px; }
+      .mural-thesis, .mural-date { grid-column: 2 / span 2; }
+      .mural-date { padding-bottom: 4px; }
+      .plus { grid-column: 3; grid-row: 1; }
+      .detail { padding-left: 0; }
+      .detail-grid, .plot-grid, .source-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: #fff; font-size: 10pt; }
+      .shell { width: 100%; }
+      .hero { min-height: auto; padding: 25mm 0 18mm; color: #000; background: #fff; border-bottom: 2mm solid #000; }
+      .hero::after, .controls-wrap, .theme-nav, .action, .filter, .search { display: none !important; }
+      .hero-grid, .theme-head, .method, .sources-head { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 46pt; }
+      .hero-lead, .hero-note, .hero-stat span { color: #333; }
+      .hero-stat { background: #fff; color: #000; border: 1px solid #aaa; }
+      .hero-stat b { color: #000; }
+      main { padding: 10mm 0; }
+      .method { box-shadow: none; }
+      .theme { break-before: page; margin-bottom: 18mm; }
+      .mural { break-inside: avoid; background: #fff; }
+      .mural[open] { box-shadow: none; margin: 0; padding: 0; }
+      .mural summary { grid-template-columns: 15mm 1fr 1.2fr 28mm; padding: 4mm 0; }
+      .plus { display: none; }
+      .detail { display: block !important; padding: 0 0 7mm 20mm; }
+      details > *:not(summary) { display: block !important; }
+      .detail-grid, .plot-grid { grid-template-columns: repeat(3, 1fr); }
+      .plots { color: #000; background: #f2f2f2; border: 1px solid #aaa; }
+      .plot, .plot b, .plots-head span { color: #222; }
+      .sources { color: #000; background: #fff; border-top-color: #000; }
+      .sources-head p, .source-card span { color: #444; }
+      .source-list { grid-template-columns: repeat(2, 1fr); background: #aaa; }
+      .source-card { min-height: 0; color: #000; background: #fff; }
+      .source-card b { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <div class="kicker">ЖК «Ганимед» · исследовательское досье · KSmelova</div>
+        <h1>От памяти<br>к горизонту</h1>
+        <p class="hero-lead">Пять человеческих практик, увиденных в трёх временах: не витрина достижений, а последовательность вопросов — что мы наследуем, чем живём и какую ответственность берём в будущее.</p>
+        <p class="hero-note"><strong>Кураторская формула</strong>Россия — главная оптика рассказа, но не замкнутая рамка: отечественные сюжеты показаны внутри обмена идеями, людьми, материалами и технологиями.</p>
+      </div>
+      <div class="hero-stats" aria-label="Состав исследования">
+        <div class="hero-stat"><b>5</b><span>тематических линий</span></div>
+        <div class="hero-stat"><b>15</b><span>временных глав</span></div>
+        <div class="hero-stat"><b>45</b><span>концепций муралов</span></div>
+        <div class="hero-stat"><b>135</b><span>вариантов сюжета</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls-wrap">
+    <div class="shell controls">
+      <div class="brand">KSmelova <span>×</span> Ganymede</div>
+      <input class="search" id="search" type="search" placeholder="Поиск: Лобачевский, титан, метро…" aria-label="Поиск по муралам">
+      <button class="filter active" type="button" data-era="all">Все эпохи</button>
+      <button class="filter" type="button" data-era="past">Прошлое</button>
+      <button class="filter" type="button" data-era="present">Настоящее</button>
+      <button class="filter" type="button" data-era="future">Будущее</button>
+      <button class="action" id="expand" type="button">Раскрыть всё</button>
+      <button class="action" id="print" type="button">Печать / PDF</button>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section class="method" aria-labelledby="method-title">
+      <div>
+        <div class="kicker">Как читать</div>
+        <h2 id="method-title">Не три даты,<br>а три взгляда</h2>
+      </div>
+      <div class="method-copy">
+        <p><strong>Прошлое</strong> — до рубежа XX века. Здесь важен не поиск «первого в мире», а момент, когда практика меняет общество: счёт организует время, железо — труд, одежда — статус, путь — пространство.</p>
+        <p><strong>Настоящее</strong> — XX век и первая четверть XXI века. Это уже не отдельный мастер, а школа, институт, фабрика, инфраструктура и пользователь. Достижение показано вместе с людьми и противоречиями эпохи.</p>
+        <p><strong>Будущее</strong> — визуально аргументированный сценарий. Ни одна такая карточка не выдаётся за прогноз: она продолжает историческую логику темы и формулирует выбор, который предстоит сделать.</p>
+        <p class="method-rule">Каждый мурал имеет один сильный тезис, российский якорь и три композиционные версии: панорамную, человеческую и символическую. Это позволяет выбирать между буквальным рассказом и более поэтичным образом.</p>
+      </div>
+    </section>
+
+    <nav class="theme-nav" id="themeNav" aria-label="Переход к темам"></nav>
+    <div id="content"></div>
+    <div class="empty" id="empty">По этому запросу ничего не найдено. Попробуйте имя, технологию или более общее слово.</div>
+  </main>
+
+  <section class="sources" id="sources">
+    <div class="shell">
+      <div class="sources-head">
+        <h2>Источники<br>и опорные факты</h2>
+        <p>Основа досье — материалы музеев, университетов, академических и государственных институций. Ссылки в карточках ведут к конкретным опорам. Будущие сюжеты обозначены как сценарии и опираются на уже существующие исследования и программы, но не утверждают, что именно так всё произойдёт.</p>
+      </div>
+      <div class="source-list" id="sourceList"></div>
+    </div>
+  </section>
+
+  <footer class="shell">
+    <span>KSmelova_murals · версия 1.0 · август 2026</span>
+    <span>Материал предназначен для концептуальной и художественной разработки муралов ЖК «Ганимед».</span>
+  </footer>
+
+  <noscript><div class="shell" style="padding:40px 0">Для просмотра исследовательских карточек включите JavaScript.</div></noscript>
+
+  <script>
+    const SOURCES = {
+      M1: {group:"Математика", title:"Кирик Новгородец и «Учение о числах»", org:"Новгородский музей-заповедник", url:"https://novgorodmuseum.ru/visit/sobytiya/magnit-%C2%ABchelolev%C2%BB"},
+      M2: {group:"Математика", title:"200 лет неевклидовой геометрии", org:"Казанский федеральный университет", url:"https://kpfu.ru/math/history/znamenitye-personalii/k-200-letiju-otkrytiya-neevklidovoj-geometrii"},
+      M3: {group:"Математика", title:"Математики Петербурга: П. Л. Чебышев", org:"Санкт-Петербургское математическое общество / ПОМИ РАН", url:"https://mathsoc.pdmi.ras.ru/history/MathSPb2ed.pdf"},
+      M4: {group:"Математика", title:"Андрей Николаевич Колмогоров", org:"Механико-математический факультет МГУ", url:"https://math.msu.ru/node/2001"},
+      M5: {group:"Математика", title:"Гражданин науки: эпоха Мстислава Келдыша", org:"Российская академия наук", url:"https://www.ras.ru/news/shownews.aspx?id=82cd2726-1fd2-4d55-b1a5-0ebdefa61fc0&print=1"},
+      M6: {group:"Математика", title:"Poincaré Conjecture: решение Григория Перельмана", org:"Clay Mathematics Institute", url:"https://www.claymath.org/millennium/poincare-conjecture/"},
+      M7: {group:"Математика", title:"Российский прототип квантового вычислителя: 72 кубита", org:"Центр квантовых технологий МГУ", url:"https://quantum.msu.ru/ru/press/news/2026-06/72-qbits"},
+      M8: {group:"Ганимед", title:"Миссия JUICE и будущая орбита Ганимеда", org:"European Space Agency", url:"https://www.cosmos.esa.int/web/juice/overview"},
+      M9: {group:"Ганимед", title:"Ганимед: океан, лёд и магнитное поле", org:"NASA Science", url:"https://science.nasa.gov/jupiter/jupiter-moons/ganymede/facts/"},
+      E1: {group:"Экономика", title:"История русского рубля", org:"Музей Банка России", url:"https://museum.cbr.ru/online-exhibitions/museum/"},
+      E2: {group:"Экономика", title:"Тульский завод Демидовых", org:"Большая российская энциклопедия", url:"https://old.bigenc.ru/domestic_history/text/1946672"},
+      E3: {group:"Экономика", title:"Сергей Витте: железные дороги и денежная реформа", org:"Президентская библиотека", url:"https://www.prlib.ru/history/619345"},
+      E4: {group:"Экономика", title:"Премия 1975 года: Канторович и оптимальное распределение ресурсов", org:"Nobel Prize", url:"https://www.nobelprize.org/prizes/economic-sciences/1975/summary/"},
+      E5: {group:"Экономика", title:"История Банка России и переходная экономика", org:"Банк России", url:"https://www.cbr.ru/about_br/history/"},
+      E6: {group:"Экономика", title:"Цифровой рубль: устройство и этапы внедрения", org:"Банк России", url:"https://www.cbr.ru/PSystem/dr/"},
+      E7: {group:"Экономика", title:"Национальный проект и экономика замкнутого цикла", org:"Правительство России", url:"https://government.ru/rugovclassifier/919/about/"},
+      E8: {group:"Экономика", title:"План развития Северного морского пути до 2035 года", org:"Правительство России", url:"https://government.ru/docs/46171/"},
+      K1: {group:"Кузнец", title:"Кузнечное производство: горн, меха, изделия", org:"Музей народных ремёсел и промыслов", url:"https://remprom.eletsmuseum.ru/kuznechnoe-proizvodstvo/"},
+      K2: {group:"Кузнец", title:"Павел Аносов и научное исследование булата", org:"Большая российская энциклопедия", url:"https://bigenc.ru/c/anosov-pavel-petrovich-01d007"},
+      K3: {group:"Кузнец", title:"Уралмаш: прессы и тяжёлое машиностроение", org:"Исторический проект Уральской ТПП", url:"https://pobeda.uralcci.com/uralmash"},
+      K4: {group:"Кузнец", title:"Уральский титан в авиации и космосе", org:"Ростех", url:"https://www.rostec.ru/media/news/titanicheskiy-trud-90-let-korporatsii-vsmpo-avisma/"},
+      K5: {group:"Кузнец", title:"Аддитивные технологии и печать металлом", org:"Росатом", url:"https://report.rosatom.ru/go/rosatom/go_rosatom_2022/rosatom_2022_key_results_ru.pdf"},
+      K6: {group:"Кузнец", title:"ИИ, роботизация и цифровые двойники в металлургии", org:"НИТУ МИСИС", url:"https://misis.ru/news/10225/"},
+      F1: {group:"Мода", title:"Региональное разнообразие русского костюма", org:"Российский этнографический музей", url:"https://ethnomuseum.ru/exposition/permanent/russians/"},
+      F2: {group:"Мода", title:"Камзол Петра I и указы о европейском платье", org:"Государственный исторический музей", url:"https://nav.shm.ru/exhibits/693/"},
+      F3: {group:"Мода", title:"От ручной набойки до машинной печати", org:"Музей ивановского ситца", url:"https://textilemuseum.ru/ru/"},
+      F4: {group:"Мода", title:"Ламанова и Мухина: искусство в быту", org:"Государственный исторический музей", url:"https://shm.ru/education/lektsiya--vera-mukhina-i-nadezhda-lamanova--predannaya-druzhba--rozhdyennaya-v-sovmestnom-tvorchestv/"},
+      F5: {group:"Мода", title:"Степанова, Попова и конструктивистская одежда", org:"Музей-заповедник «Царицыно»", url:"https://tsaritsyno-museum.ru/the_museum/collection/tkani-kostyum/"},
+      F6: {group:"Мода", title:"Вячеслав Зайцев и новое прочтение русского костюма", org:"Государственный Эрмитаж", url:"https://hermitagemuseum.org/what-s-on/b462483ed42dafb04a5aa896d42b5429?lng=ru"},
+      F7: {group:"Мода", title:"Дорожная карта устойчивого и циклического текстиля", org:"UN Environment Programme", url:"https://www.unep.org/resources/publication/sustainability-and-circularity-textile-value-chain-global-roadmap"},
+      T1: {group:"Транспорт", title:"Речные пути Восточной Европы и древнерусское общество", org:"Новгородский музей-заповедник", url:"https://novgorodmuseum.ru/visit/sobytiya/vikingi.-put-na-vostok"},
+      T2: {group:"Транспорт", title:"История ямской гоньбы и путей сообщения", org:"Президентская библиотека", url:"https://www.prlib.ru/item/416587"},
+      T3: {group:"Транспорт", title:"История российских железных дорог", org:"Музей железных дорог России", url:"https://2035.rzd-museum.ru/"},
+      T4: {group:"Транспорт", title:"История Московского метрополитена", org:"Московский метрополитен", url:"https://mosmetro.ru/about/history"},
+      T5: {group:"Транспорт", title:"Жуковский, Туполев и становление авиационной науки", org:"ЦАГИ", url:"https://www.tsagi.ru/institute/history/"},
+      T6: {group:"Транспорт", title:"Сергей Королёв и практическая космонавтика", org:"Роскосмос", url:"https://kns.roscosmos.ru/media/files/posters/biographies/korolev.pdf"},
+      T7: {group:"Транспорт", title:"Цифровая трансформация и беспилотный транспорт", org:"Министерство транспорта России", url:"https://mintrans.gov.ru/documents/3/14826?type=3"}
+    };
+
+    const THEMES = [
+      {
+        id:"math", index:"01", name:"Математика", line:"считаю время → меняю пространство → моделирую неизвестное",
+        thesis:"Математика здесь — не россыпь формул, а способ делать невидимое общим: согласовать календарь, увидеть другую геометрию, рассчитать полёт и описать мир, к которому ещё нельзя прикоснуться.",
+        palette:["#d98930","#253f64","#e8d7ab","#b94632"],
+        eras:[
+          {id:"past", title:"Прошлое", intro:"От счёта времени к свободе математического воображения — три российских эпизода, в которых абстракция вырастает из практики и возвращается в устройство мира.", murals:[
+            {id:"M01", date:"Новгород · 1136", title:"Время, собранное в число", thesis:"Кирик Новгородец превращает календарный круг в вычислимую систему.",
+             description:"«Учение о числах» Кирика — древнейшее сохранившееся русское математико-хронологическое сочинение. Его герой не «изобретает математику на Руси», а показывает, как книжная культура соединяла счёт лет, лунные и солнечные циклы, календарь и повседневное чувство времени.",
+             importance:"Мурал открывает линию с понятной человеческой потребности: договориться, какой сегодня день и как большое время укладывается в повторяющиеся циклы. Число становится инструментом памяти и координации сообщества.",
+             russia:"Новгородский Антониев монастырь, рукописная традиция и фигура Кирика дают точный локальный адрес. Важно показать средневековую Русь частью византийского и общеевропейского пространства знаний, а не изолированным «первенством».",
+             plots:["Писец в центре, вокруг него семь концентрических колец: час, день, неделя, лунный круг, год; кольца постепенно становятся орбитами.","Панорама Новгорода отражается в листе Волхова; мостовые и кровли складываются в счётную сетку, а рукописные цифры — в созвездия.","Без портрета: рука с пером делит круг света на всё меньшие доли; последняя доля превращается в далёкий сияющий спутник."], refs:["M1"]},
+            {id:"M02", date:"Казань · 1826", title:"Параллельные встречаются с выбором", thesis:"Лобачевский показывает: пространство может подчиняться не одной геометрии.",
+             description:"В докладе 1826 года Николай Лобачевский отказался считать пятый постулат Евклида единственно возможным и построил непротиворечивый новый мир. Исторически важен не миф об одиноком озарении, а смелость сменить само основание вопроса.",
+             importance:"Это образ интеллектуальной свободы: правило, казавшееся природным, оказывается соглашением. Такая смена оптики подготовила язык для дальнейшей математики и физики искривлённых пространств.",
+             russia:"Сюжет прочно связан с Казанским университетом — местом учёбы, преподавания, ректорства и первого сообщения Лобачевского. Архитектура Казани может стать частью геометрии, а не декоративным фоном.",
+             plots:["Классический портик Казанского университета изгибается, не разрушаясь; две световые линии расходятся к разным горизонтам.","Лобачевский у меловой доски, но формула продолжается за её край и меняет перспективу всего зала со студентами.","Две сетки — плоская и седловидная — сходятся на лице зрителя; привычная улица Казани раскрывается в иное пространство."], refs:["M2"]},
+            {id:"M03", date:"Петербург · 1840–1890-е", title:"Точная мысль приводит механизм в движение", thesis:"У Чебышёва доказательство и машина говорят на одном языке.",
+             description:"Пафнутий Чебышёв развивал теорию чисел, вероятностей и приближений, одновременно исследуя механизмы. Его работы показывают важный для XIX века поворот: чистая математика и инженерная задача не противопоставлены, а взаимно проверяют друг друга.",
+             importance:"Формула здесь получает шарниры и начинает шагать. Мурал связывает отвлечённое мышление с ответственностью за точность реальной машины — мост к будущей вычислительной и инженерной культуре.",
+             russia:"Петербургская математическая школа и университет становятся коллективным фоном. Чебышёв — центральная фигура, но рядом должны присутствовать ученики, чертежи и мастерская, чтобы не создавать культ одиночки.",
+             plots:["Чертёж шарнирного механизма постепенно оживает: циркульная линия становится шагом стальной «стопоходящей машины».","На одной стене — простые числа как звёзды, на другой — система тяг; между ними рука соединяет вычисление и деталь.","Портретный медальон Чебышёва встроен в огромную кинематическую схему, где каждое звено несёт фрагмент Петербурга."], refs:["M3"]}
+          ]},
+          {id:"present", title:"Настоящее", intro:"XX–XXI века: математика становится школой, инфраструктурой больших проектов и одновременно предельно личным актом доказательства.", murals:[
+            {id:"M04", date:"Москва · 1930–1980-е", title:"У случайности появляется закон", thesis:"Колмогоров даёт строгий язык вероятности — от турбулентности до информации.",
+             description:"Андрей Колмогоров аксиоматизировал современную теорию вероятностей и работал в широчайшем спектре областей — от динамических систем и турбулентности до сложности алгоритмов. Мурал должен показать не «повелителя хаоса», а язык, позволяющий честно говорить о неопределённости.",
+             importance:"Современное общество живёт не только точными ответами, но и оценкой риска. Признать неопределённость измеримой — значит принимать решения ответственнее, не выдавая вероятность за судьбу.",
+             russia:"Московский университет, научная школа и колмогоровская педагогика дают российский контекст. Визуально уместны доска, школьная аудитория и река турбулентного потока как единая среда знания.",
+             plots:["Дождь падает кажущимся хаосом, но круги на воде собираются в распределение; на берегу учёный и школьники смотрят на один рисунок.","Поток воздуха над крылом переходит в график вероятностей, затем — в двоичный код: три области работ Колмогорова в одной волне.","Множество разноцветных точек не складывается в портрет учёного буквально, а образует его профиль только с большой дистанции."], refs:["M4"]},
+            {id:"M05", date:"СССР · 1940–1970-е", title:"Уравнение становится траекторией", thesis:"Школа Келдыша переводит расчёт из тетради в авиацию и космос.",
+             description:"Мстислав Келдыш работал над опасными колебаниями самолёта, развивал вычислительную математику и участвовал в формировании советской космической программы. Здесь математика предстаёт коллективной инфраструктурой: расчёт, машина, испытание и решение связаны в одну цепь.",
+             importance:"Большие технологические проекты невозможны без «невидимого труда» математиков. Мурал возвращает расчёту человеческий масштаб и показывает, что полёт начинается задолго до старта — с модели, ошибки и повторной проверки.",
+             russia:"Келдыш — сильный отечественный якорь, но композиция должна включать вычислителей, инженеров и операторов. Космическая линия России возникает как совместная работа школ, институтов и производств.",
+             plots:["Слева дрожащее крыло самолёта, в центре сетка расчёта, справа спокойная дуга космической траектории; Келдыш соединяет три плана.","Ночной вычислительный зал: перфолента поднимается и превращается в след ракеты над земным горизонтом.","Стол с формулами виден сверху как космодром; карандаш становится ракетой, но вокруг остаются руки всей команды."], refs:["M5"]},
+            {id:"M06", date:"Санкт-Петербург · 2002–2003", title:"Пространство узнаёт свою форму", thesis:"Доказательство Перельмана завершает вековой разговор о трёхмерных пространствах.",
+             description:"Григорий Перельман опубликовал решение гипотезы Пуанкаре в открытых препринтах 2002–2003 годов, развив метод потока Риччи Ричарда Гамильтона. В центре сюжета — не медийная легенда об отказе от награды, а само доказательство и многолетняя международная проверка.",
+             importance:"Математическая истина здесь возникает не голосованием и не авторитетом: сложный аргумент становится общим только после того, как сообщество может его прочитать, проверить и продолжить.",
+             russia:"Петербургская геометрическая школа и ПОМИ дают место действия. Российская связь сильна сама по себе, поэтому не нужно превращать приватность Перельмана в сенсационный сюжет.",
+             plots:["Лента обнимает яблоко и стягивается в точку, но за ним открывается объёмная сетка сложного пространства и светлый выход.","Страницы препринта расходятся по миру как белые птицы; в разных окнах математики проверяют фрагменты одного доказательства.","Петербургский двор-колодец сверху превращается в топологическую форму; тонкая световая линия «разглаживает» её, не стирая историю."], refs:["M6"]}
+          ]},
+          {id:"future", title:"Будущее", intro:"Три сценария продолжают российские школы, но намеренно формулируются как вопросы: кто задаёт цель, кто проверяет результат и где проходит граница допустимого.", murals:[
+            {id:"M07", date:"Сценарий · 2035+", title:"Доказательство вдвоём с машиной", thesis:"ИИ перебирает океан ходов, человек отвечает за вопрос, смысл и доверие.",
+             description:"Будущая математика может соединить генерацию гипотез, формальную проверку и человеческую интуицию. Это не образ кнопки «доказать», а новая мастерская, где алгоритм предлагает маршруты, а исследователь понимает, какие из них важны и почему.",
+             importance:"Мурал заранее ставит этический вопрос об авторстве и проверяемости. Если доказательство слишком велико для прямого чтения человеком, обществу понадобятся новые формы доверия, открытые стандарты и независимая проверка.",
+             russia:"Связь строится через российские традиции математической логики, алгоритмической сложности и сильных школ программирования; Колмогоровская линия может быть тонким визуальным мостом, а не буквальной цитатой.",
+             plots:["Исследователь и световая фигура ИИ стоят по разные стороны дерева доказательства; ветви машины многочисленны, человеческая рука выбирает осмысленный путь.","Открытая библиотека будущего: каждый «кирпич» стены — проверенная лемма, роботы укладывают их, люди проектируют свод.","Шахматная доска без фигур превращается в бесконечный граф; две разные линии — тёплая человеческая и холодная машинная — сходятся в одном узле."], refs:["M4","M6"]},
+            {id:"M08", date:"Сценарий · 2035–2050", title:"Вычисление меняет правила масштаба", thesis:"Надёжная квантовая машина решает не всё, а особый класс задач — вместе с новой математикой ошибок.",
+             description:"Квантовое вычисление требует не только физического устройства, но и алгоритмов, коррекции ошибок и ясного понимания границ преимущества. Будущий мурал избегает магического «квантового сияния»: он показывает хрупкое состояние, которое необходимо удержать и проверить.",
+             importance:"Образ учит технологической трезвости. Прорыв — это не количество кубитов само по себе, а способность получить воспроизводимый полезный результат для моделирования материалов, химии или оптимизации.",
+             russia:"Российская дорожная карта и прототип МГУ на нейтральных атомах дают реальный сегодняшний фундамент. Будущий сюжет продолжает его до распределённой вычислительной лаборатории, не объявляя победу заранее.",
+             plots:["Семьдесят два световых атома удерживаются пинцетами лучей; вокруг — видимый слой коррекции, где ошибки гасятся как рябь.","Классический орнамент из точек постепенно становится квантовым регистром, а затем — моделью нового кристалла для северной техники.","Человек смотрит не на сияющий куб, а на три результата одной задачи; надёжность рождается там, где они совпадают."], refs:["M7"]},
+            {id:"M09", date:"Сценарий · Ганимед", title:"Карта невидимого океана", thesis:"Математика собирает внутренний мир спутника по слабым внешним сигналам.",
+             description:"Под ледяной корой Ганимеда предполагается глобальный океан, а сам спутник обладает собственным магнитным полем. Будущая экспедиция будет видеть недра косвенно — через радар, гравитацию, колебания и магнитные данные; математическая обратная задача превращает эти следы в модель.",
+             importance:"Финал линии показывает высшую форму интеллектуальной скромности: мы не вскрываем далёкий мир ради эффекта, а учимся понимать его по минимальному вмешательству и всегда оставляем место неопределённости.",
+             russia:"Отечественная вычислительная математика, небесная механика и линия Келдыша дают культурную опору. Российский знак — не флаг на поверхности, а вклад школы расчёта в международную научную карту.",
+             plots:["Прозрачный разрез Ганимеда: поверхность видима резко, океан — как вероятностное облако; три прибора дают пересекающиеся лучи данных.","Земная аудитория и далёкий робот соединены одной формулой; мел на доске превращается в линию подлёдного рельефа.","Магнитные сияния обнимают спутник и одновременно рисуют на тёмном фоне математические контуры скрытого океана."], refs:["M5","M8","M9"]}
+          ]}
+        ]
+      },
+      {
+        id:"economy", index:"02", name:"Экономика", line:"обмениваю → распределяю → удерживаю баланс",
+        thesis:"Экономика — не только деньги. Это договор о доверии, способ соединить расстояния, выбрать между дефицитными возможностями и решить, что общество считает ценностью и какой ценой её создаёт.",
+        palette:["#b44b31","#d2aa55","#1f5b55","#242b2a"],
+        eras:[
+          {id:"past", title:"Прошлое", intro:"От серебряного слитка и личной записи на бересте — к заводской сети и железной дороге, которая превращает огромную территорию в взаимозависимое хозяйство.", murals:[
+            {id:"E01", date:"Новгород · XIII–XIV века", title:"Доверие получает меру", thesis:"Рубль возникает как единица счёта и обещание, которое признают другие.",
+             description:"Название «рубль» впервые фиксируется в новгородской берестяной грамоте конца XIII века и связывается с серебряными гривнами-слитками. Но главный герой мурала — не монета, а доверие: запись долга, вес металла, рукопожатие и память о сделке.",
+             importance:"Экономика начинается там, где незнакомые или разделённые временем люди могут сравнить ценность и выполнить обязательство. Мера сокращает спор, но не отменяет человеческой ответственности.",
+             russia:"Новгородская береста и история рубля дают редкое соединение археологического предмета, текста и живой денежной традиции. Ганзейские связи показывают, что русская торговля развивалась через международный обмен.",
+             plots:["Берестяная строка проходит через чаши весов; на одной — серебряный слиток, на другой — мех, воск и труд ремесленника.","Рынок у Волхова показан сверху как сеть рукопожатий; в центре пустое пространство формирует знак рубля без современной графической буквальности.","Три поколения передают один слиток, который последовательно становится счётной записью, монетой и цифровым импульсом — пролог всей линии."], refs:["E1","T1"]},
+            {id:"E02", date:"Тула — Урал · 1690–1750-е", title:"Мастерская становится системой", thesis:"Демидовские заводы соединяют предпринимательство, государственный заказ, воду, лес, руду и зависимый труд.",
+             description:"Первые заводы Демидовых выросли из тульского оружейного и кузнечного опыта и перенесли его на Урал. Исторически это важный рывок металлургии, но мурал не должен скрывать ресурсную нагрузку, жёсткие формы труда и тесную связь частной инициативы с государством.",
+             importance:"Экономический рост виден как система взаимозависимостей: без реки не вращается колесо, без леса нет угля, без людей нет металла. Такой образ сложнее и честнее портрета «великого промышленника».",
+             russia:"Тула, Невьянск и Урал образуют пространственную ось. Можно показать движение навыка и работников с запада на восток, а также возникновение заводских поселений, изменивших карту страны.",
+             plots:["Разрез горнозаводского мира: лес, шахта, плотина, молот, склад и обоз замкнуты в один круг; в центре — не владелец, а поток труда.","Две ладони держат железную полосу: одна в перчатке хозяина, другая в мозолях работника; между ними отражаются завод и вырубленный лес.","Карта Урала собирается из водяных колёс, но часть круга остаётся тёмной — визуальная пауза для цены индустриализации."], refs:["E2"]},
+            {id:"E03", date:"Россия · 1890-е", title:"Рельсы сшивают рынок", thesis:"Политика Витте связывает тариф, золотой рубль, капитал и Транссиб в проект ускоренного развития.",
+             description:"В конце XIX века железнодорожное строительство и денежная реформа стали инструментами экономической политики Сергея Витте. Это сюжет о том, как инфраструктура меняет стоимость расстояния, ускоряет оборот товаров и одновременно усиливает роль государства и внешнего капитала.",
+             importance:"Мурал показывает, что рынок не возникает сам: ему нужны пути, правила, доверие к деньгам и политический выбор. Выигрыш одних регионов и отраслей может сопровождаться неравенством и высокой социальной ценой.",
+             russia:"Транссибирская магистраль — узнаваемая российская линия масштаба. Портрет Витте уместен как один из узлов, но главным персонажем должна стать меняющаяся территория от европейской части страны до Владивостока.",
+             plots:["Золотая монета лежит в центре колёсной пары; от неё расходятся рельсы, превращающиеся в график товарных потоков и контур страны.","Один перрон соединяет девять часовых поясов: крестьянин, инженер, купец и переселенческая семья ждут один поезд, но с разными надеждами.","Витте держит не свиток, а прозрачную тарифную сетку; за ней поезд пересекает карту, на которой видны и новые города, и разорванные ландшафты."], refs:["E3","T3"]}
+          ]},
+          {id:"present", title:"Настоящее", intro:"В XX–XXI веках хозяйство становится задачей оптимизации, переживает болезненную смену институтов и входит в эпоху мгновенных цифровых расчётов.", murals:[
+            {id:"E04", date:"Ленинград · 1939 / 1975", title:"Дефицит становится задачей выбора", thesis:"Канторович математически показывает, как распределять ограниченные ресурсы эффективнее.",
+             description:"Леонид Канторович начал с производственной задачи и сформулировал методы линейного программирования; в 1975 году его вклад в теорию оптимального распределения ресурсов был отмечен премией по экономике. Мурал не прославляет «идеальный план», а показывает полезный язык выбора при ограничениях.",
+             importance:"Любая экономика сталкивается с дефицитом времени, сырья и труда. Оптимизация делает компромиссы видимыми, но целевую функцию всё равно задают люди: максимум выпуска не тождественен максимуму благополучия.",
+             russia:"Ленинградская фанерная фабрика и советская школа математической экономики дают конкретный сюжет. Важно отделить силу метода от противоречий реального планового хозяйства.",
+             plots:["Доски разной длины укладываются в строгую раскройную схему; отходы уменьшаются, а линии чертежа превращаются в матрицу.","Канторович у доски, перед ним не абстрактные цифры, а три очереди потребностей: жильё, транспорт, производство; решение подсвечивает неизбежный выбор.","Огромные весы имеют множество чаш; тонкие линии множителей удерживают систему, но одна пустая чаша напоминает о том, что модель не видит всего."], refs:["E4"]},
+            {id:"E05", date:"Россия · 1988–2000-е", title:"Цена смены правил", thesis:"Переход от плановой системы к рынку создаёт свободу инициативы и глубокую социальную неуверенность.",
+             description:"Конец 1980-х и 1990-е — формирование коммерческих банков, рыночного курса рубля и новых институтов при высокой инфляции, кризисах и распаде привычных хозяйственных связей. Это не сюжет победителей и проигравших, а общий опыт резкой смены правил.",
+             importance:"Мурал нужен как историческая память о том, что реформа измеряется не только макропоказателями. За диаграммами стоят сбережения, профессии, новые возможности, закрытые предприятия и семейные стратегии выживания.",
+             russia:"Российские банкноты разных выпусков, киоск, заводская проходная, биржевое табло и первая вывеска малого бизнеса создают узнаваемый, но не ностальгический образ переходной эпохи.",
+             plots:["Одна улица разделена пополам: закрытая заводская проходная и яркий рынок; через разлом люди переносят вещи, навыки и надежды.","Семейный стол с тремя слоями времени: сберкнижка, ваучер, первая банковская карта; за каждым предметом — лицо, а не лозунг.","График курса превращается в городской горизонт; его резкие пики проходят через окна домов, показывая, как макроэкономика входит в быт."], refs:["E5"]},
+            {id:"E06", date:"Россия · 2019–2026", title:"Стоимость движется как данные", thesis:"Мгновенный платёж и цифровой рубль меняют форму расчёта, но не отменяют вопрос доверия.",
+             description:"Система быстрых платежей и пилот цифрового рубля показывают переход к круглосуточной платёжной инфраструктуре. Цифровой рубль — ещё одна форма национальной валюты, а не инвестиционный актив; в 2026 году доступ до массового этапа остаётся ограничен участниками пилота.",
+             importance:"Удобство становится почти невидимым, зато растут требования к доступности, кибербезопасности, приватности и добровольности. Хороший мурал показывает не сияющий QR-код, а людей, между которыми технология должна сохранить доверие.",
+             russia:"Проект Банка России и российская платёжная инфраструктура дают актуальную связь. Уместно соединить берестяную долговую запись из первого мурала с современным цифровым кошельком — через восемь веков меняется носитель, не смысл обязательства.",
+             plots:["Серебряная гривна, бумажный рубль и цифровой знак стоят в одной прозрачной оси; за ними неизменное рукопожатие двух людей.","Платёж проходит из мегаполиса в северный посёлок как световая нить, но по пути видны узлы защиты и офлайн-разрыв — технология не изображена всемогущей.","Экран телефона раскрывается как городской мост: по нему идут покупатель, предприниматель и банк; под мостом отражены вопросы приватности."], refs:["E6","E1"]}
+          ]},
+          {id:"future", title:"Будущее", intro:"Будущая экономика в досье измеряет успех не скоростью потребления, а способностью удерживать материалы в обороте, соединять территории бережно и договариваться о конечных ресурсах.", murals:[
+            {id:"E07", date:"Сценарий · 2030–2040", title:"Материал не становится мусором", thesis:"Экономика замкнутого цикла проектирует повторное использование ещё до производства вещи.",
+             description:"В будущем цифровой паспорт материала, ремонтопригодность и обратная логистика могут превратить отход из финальной точки в следующий ресурс. Это больше, чем раздельный сбор: меняется сам дизайн продукта и ответственность производителя.",
+             importance:"Сюжет предлагает другой образ богатства — не гора новых вещей, а долговечность, ремонт и сохранённая ценность материала. Он связывает экономику с экологией без морализаторской картинки «зелёного листика».",
+             russia:"Федеральный проект «Экономика замкнутого цикла» и промышленный масштаб страны дают реальную основу. Урал может стать визуальным местом, где старый металл возвращается в новую конструкцию.",
+             plots:["Город показан как круговой разрез: дом разбирается на маркированные слои, которые сразу входят в новые мост, вагон и инструмент.","Старый ключ, деталь машины и титановая обрезь проходят через руки ремонтника и возвращаются не сырьём, а предметами с новой историей.","Знак бесконечности собран не из стрелок, а из реальных производственных сцен; один разрыв в петле оставлен как задача, а не скрыт декором."], refs:["E7","K4"]},
+            {id:"E08", date:"Сценарий · Арктика 2035+", title:"Коридор, который слышит территорию", thesis:"Северный маршрут создаёт ценность только тогда, когда безопасность людей и экосистемы включена в расчёт.",
+             description:"Развитие Северного морского пути связывает снабжение северных поселений, порты, ледокольный флот и глобальную логистику. Будущий мурал переопределяет успех: не только тоннаж, но надёжность завоза, сохранность среды и участие жителей в решениях.",
+             importance:"Арктика легко превращается в декорацию покорения. Здесь она должна быть действующим субъектом: лёд меняется, расстояние диктует цену ошибки, а экономическая выгода не отменяет пределов хрупкой среды.",
+             russia:"Это одна из самых территориально специфичных российских тем. В центре — не один ледокол, а сеть от Мурманска до Владивостока, северные города, научное наблюдение и коренные сообщества.",
+             plots:["Ледовый маршрут читается как кардиограмма: порты — точки пульса, поселения — тёплые узлы, а ледокол идёт не разрезая композицию, а поддерживая связь.","Капитан, метеоролог и житель северного посёлка смотрят на одну карту с разными слоями — груз, лёд, миграция животных, сроки завоза.","Белое поле стены почти пусто; тонкая линия пути окружена широкими охранными зонами, визуально делая предел важнее скорости."], refs:["E8"]},
+            {id:"E09", date:"Сценарий · поселение на Ганимеде", title:"Экономика конечного мира", thesis:"В замкнутом внеземном поселении ценность измеряется водой, энергией, временем и доверием.",
+             description:"На Ганимеде любая утечка воды, потеря детали или конфликт доступа становится системным риском. Экономика будущего здесь похожа на управление общим домом: прозрачные запасы, ремонт, гарантированный базовый доступ и правила для ресурсов, которые нельзя быстро восполнить.",
+             importance:"Финальный сюжет переносит знакомые земные вопросы в предельно ясные условия. Он не рекламирует добычу другого мира, а спрашивает: какие институты помогут не повторить на нём земные формы неравенства и расточительства?",
+             russia:"Связь проходит через методы Канторовича, опыт больших изолированных систем и космическую традицию России. Это вклад в международное поселение, а не присвоение территории символами государства.",
+             plots:["Круглый стол жителей окружает прозрачную модель запасов воды, воздуха и энергии; ни у кого нет «главного» места, решение визуально общее.","Один литр воды проходит полный цикл: человек, теплица, очистка, лёд; рядом счётчик показывает не цену, а оставшийся ресурс и время.","Локальная расчётная единица имеет четыре стороны — труд, ресурс, риск и общественное доверие; её образ построен как открытая, изменяемая схема."], refs:["E4","E7","M9"]}
+          ]}
+        ]
+      },
+      {
+        id:"smith", index:"03", name:"Кузнец", line:"удар → структура → запрограммированный материал",
+        thesis:"Кузнец — архетип преобразования, но историческая линия шире наковальни: от деревенского инструмента к прессу, титану, лазерной печати и ответственности за полный жизненный цикл металла.",
+        palette:["#101514","#d65a30","#f0a33a","#858b89"],
+        eras:[
+          {id:"past", title:"Прошлое", intro:"Три масштаба одного ремесла: полезная вещь в сельской кузнице, вододействующий завод и микроскоп, впервые читающий внутренний узор стали.", murals:[
+            {id:"K01", date:"Русь · X–XIII века", title:"Огонь делает повседневность прочнее", thesis:"Главное изделие кузнеца — не меч, а мир инструментов, который держит дом и хозяйство.",
+             description:"Древнерусский кузнец владел нагревом, ковкой, сваркой, закалкой и наваркой стального лезвия. Мурал сознательно отводит оружию второстепенное место: серп, топор, скоба, замок, гвоздь и подкова лучше показывают реальный охват ремесла.",
+             importance:"Один мастер умножает возможности всего поселения. Железный инструмент влияет на земледелие, строительство, транспорт и безопасность; ценность кузнеца — в ремонтируемой вещи и передаваемом навыке.",
+             russia:"Археология древнерусских городов и локальные музейные коллекции дают фактуру без сказочной условности. Важно различать эпохи и не превращать кузнеца XI века в позднего былинного богатыря.",
+             plots:["Разрез небольшой кузницы: меха, горн, наковальня; от неё лучами расходятся восемь предметов, а вокруг них строится день поселения.","Кузнец чинит сошник, рядом ждут плотник, земледелец и возчик; композиция показывает цепочку профессий, зависимых от одной детали.","Искры складываются не в меч, а в контур дома, лодки и колоса — символический ответ на привычный героический штамп."], refs:["K1"]},
+            {id:"K02", date:"Тула — Урал · XVIII век", title:"Молот получает силу реки", thesis:"Водяное колесо увеличивает удар и превращает ремесло в промышленный ритм.",
+             description:"Горнозаводская металлургия соединяет рудник, лес, плотину, домну и молотовую фабрику. Кузнец уже не полностью управляет процессом один: его опыт встроен в большой механизм и разделение труда.",
+             importance:"Это переход от уникальной вещи к масштабу серийного производства. Вместе с мощностью возникают зависимость от природных ресурсов, дисциплина фабричного времени и тяжёлые социальные отношения.",
+             russia:"Тульский опыт Демидовых и его перенос на Урал дают ясный маршрут. В центре лучше показать мастеров и водяной молот, а владельца и государственный заказ оставить одним из контекстных слоёв.",
+             plots:["Огромное водяное колесо занимает половину стены; его лопатки превращаются в руки работников разных цехов, задающих общий ритм.","Небольшой ручной молот на переднем плане повторяет форму заводского хвоста-молота вдали — увеличение масштаба без разрыва ремесленной памяти.","Река течёт через руду, древесный уголь и раскалённую заготовку; ниже по течению вода темнеет, напоминая о цене производства."], refs:["E2"]},
+            {id:"K03", date:"Златоуст · 1831–1841", title:"Сталь показывает внутренний узор", thesis:"Павел Аносов соединяет опыт горна с наблюдением под микроскопом.",
+             description:"Исследуя булат, Аносов связал химический состав, структуру, обработку и свойства стали и одним из первых применил микроскоп для изучения металлических сплавов. Тайна мастера становится воспроизводимым знанием, не теряя красоты.",
+             importance:"Мурал фиксирует рождение материаловедения из диалога ремесла и науки. Качество металла теперь можно не только почувствовать ударом и глазом, но объяснить, проверить и передать.",
+             russia:"Златоуст, его оружейная фабрика и знаменитая гравюра на стали дают богатый местный язык. Лучше показать Аносова рядом с мастерами и образцами, а не одиноким «раскрывателем секрета».",
+             plots:["Лезвие булата проходит через линзу микроскопа; декоративные волны на поверхности раскрываются в кристаллический ландшафт Урала.","Аносов и кузнец смотрят на одну заготовку с двух сторон: один через окуляр, другой по цвету жара; их взгляды сходятся внутри металла.","Златоустовская гравюра постепенно перестаёт быть орнаментом и превращается в научную схему структуры сплава."], refs:["K2"]}
+          ]},
+          {id:"present", title:"Настоящее", intro:"XX–XXI века увеличивают кузнечный жест до десятков тысяч тонн, открывают эпоху титана и возвращают локальность мастерской в виде цифровой печати.", murals:[
+            {id:"K04", date:"Свердловск · 1930–1960-е", title:"Машина куёт машину", thesis:"Гигантский пресс создаёт детали для производств, которые больше человеческой руки.",
+             description:"Уралмаш стал одним из центров тяжёлого машиностроения: его кузнечно-прессовое производство выпускало прессы и крупные детали, а во время войны штамповало башни танков. История индустриализации показана через мощность и труд, но также через мобилизацию и цену ускорения.",
+             importance:"Современный кузнец — бригада, крановщик, технолог, контролёр и конструктор. Масштаб детали требует координации, безопасности и общей ответственности: один неверный режим уже не исправить ударом малого молота.",
+             russia:"Конструктивистская архитектура Уралмаша, кузнечно-прессовый цех и рабочий район дают узнаваемую топографию Екатеринбурга. Завод показан не как безличный монстр, а как город и сообщество.",
+             plots:["Человек стоит между бойками пресса как единица масштаба; вокруг него полукругом — вся бригада и система сигналов безопасности.","Малый кузнечный молот лежит на чертеже гигантского пресса; его рукоять превращается в проспект соцгорода Уралмаш.","Одна раскалённая штамповка последовательно становится турбиной, экскаватором и новым прессом — машина действительно создаёт машину."], refs:["K3"]},
+            {id:"K05", date:"Верхняя Салда · 1957–сегодня", title:"Лёгкий металл несёт тяжёлую мечту", thesis:"Российский титан входит в самолёты, космические корабли и международные проекты.",
+             description:"Первый титановый слиток в Верхней Салде получили в 1957 году; далее уральские полуфабрикаты использовались в авиации, «Союзе—Аполлоне», «Энергии» и «Буране». Современная ковка здесь — управление сложным материалом от слитка до ответственной детали.",
+             importance:"Титан показывает, что свойство материала становится общественной возможностью: меньший вес, прочность и коррозионная стойкость позволяют лететь дальше. Но ценность возникает только через полный цикл знаний и контроля качества.",
+             russia:"Верхняя Салда — сильный локальный герой, а советско-американская стыковка позволяет показать материал как мост сотрудничества. Не стоит сводить сюжет к логотипам техники: важнее металл и люди.",
+             plots:["Серебристый слиток вытягивается в одну непрерывную ленту и последовательно образует крыло, стыковочный узел и контур «Бурана».","Металлург держит небольшую поковку, но её тень на стене принимает форму летящего аппарата — масштаб значения больше предмета.","Панорама Верхней Салды отражается на поверхности титанового диска; в его полированной кромке видны небо и орбита."], refs:["K4"]},
+            {id:"K06", date:"Россия · 2020-е", title:"Лазер становится молотом", thesis:"Металлическая деталь выращивается слой за слоем — прямо из цифровой модели.",
+             description:"Селективное лазерное плавление и другие аддитивные методы работают с металлическим порошком, создавая сложные детали и сокращая часть отходов. В России развиваются собственные принтеры, порошки, программное обеспечение и центры производства.",
+             importance:"Новая технология не отменяет материаловедение: дефекты, напряжения, состав порошка и контроль остаются критичными. Современный «кузнец» управляет параметрами процесса, а затем проверяет реальную, не виртуальную деталь.",
+             russia:"Аддитивное направление Росатома и исследования МИСИС дают конкретные российские точки. Визуальная преемственность строится на одинаковой функции огня: раньше он размягчал заготовку целиком, теперь локально пишет форму.",
+             plots:["Старинный молот и лазерный луч занимают симметричные половины; их искры сходятся в одной сложной решётчатой детали.","Металлический порошок выглядит как звёздное поле, из которого луч слой за слоем поднимает деталь космического двигателя.","Оператор наблюдает цифровой двойник, контролёр держит томографический срез, а готовая деталь стоит между ними — три равных этапа."], refs:["K5","K6"]}
+          ]},
+          {id:"future", title:"Будущее", intro:"Будущая кузница программирует структуру, ремонтирует вместо замены и выходит за Землю только вместе с правилами бережного обращения с чужой средой.", murals:[
+            {id:"K07", date:"Сценарий · 2035+", title:"Материал знает, где быть сильным", thesis:"Вычислительная решётка меняет плотность и свойства внутри одной детали.",
+             description:"Алгоритмический дизайн и многоматериальное выращивание могут создавать структуру, которая плотна только там, где проходит нагрузка, отводит тепло в нужном направлении и сообщает о повреждении. Форма перестаёт быть оболочкой — она становится распределённым свойством.",
+             importance:"Это продолжение аносовской идеи: свойство рождается из внутреннего строения. Но теперь структуру не только наблюдают, её проектируют — значит, ответственность конструктора распространяется до микромасштаба.",
+             russia:"Российские школы материаловедения, МИСИС, атомная и аэрокосмическая промышленность дают основу. Уральский узор булата можно превратить в современную решётку, показав двухвековую связь.",
+             plots:["Узор булатной стали слева постепенно становится рассчитанной ячеистой структурой справа; между ними одна линия нагрузки светится красным.","Деталь разрезана как ландшафт: плотные «города» материала стоят в узлах усилий, лёгкие «поля» экономят массу.","Инженер не рисует внешний контур — он настраивает свойства света, тепла и прочности внутри прозрачной заготовки."], refs:["K2","K6"]},
+            {id:"K08", date:"Сценарий · 2040+", title:"Металл возвращается, а не исчезает", thesis:"Ремонт, переплавка и паспорт сплава замыкают кузнечный цикл.",
+             description:"Будущая кузница умеет определить состав старой детали, локально восстановить изношенное место и вернуть металл в производство без потери критичных свойств. Цифровая история материала делает каждую следующую переработку осознанной.",
+             importance:"Сюжет меняет героику огня: главный подвиг — не произвести больше, а сохранить качество дольше. Для металлоёмкой промышленности это экономия энергии, руды, перевозок и накопленного мастерства.",
+             russia:"Промышленные регионы России и федеральная линия замкнутого цикла позволяют показать будущее не в стерильной лаборатории, а на месте старых заводов, которые учатся работать с новым ресурсным этикетом.",
+             plots:["Изношенная шестерня проходит три станции — диагностика, наплавка, проверка — и возвращается в тот же механизм с видимым «шрамом» ремонта.","Кольцо металла образовано предметами разных веков: сошник, рельс, турбина, космическая деталь; ни один не исчезает бесследно.","Сканер читает паспорт сплава как летопись: слои прошлых изделий проявляются в металле полупрозрачными силуэтами."], refs:["E7","K5"]},
+            {id:"K09", date:"Сценарий · орбита Ганимеда", title:"Кузница без веса", thesis:"Орбитальная мастерская чинит экспедицию тем металлом, который уже доставлен, не превращая Ганимед в карьер.",
+             description:"В далёкой экспедиции невозможно ждать каждую запчасть с Земли. Роботизированная кузница может перерабатывать обломки, печатать детали и использовать вакуум или микрогравитацию. Но местное сырьё допустимо только после научной и международной оценки.",
+             importance:"Мурал соединяет технологическую автономию с этическим самоограничением. Способность добыть материал ещё не означает право это сделать; ремонт собственного запаса становится первой и предпочтительной стратегией.",
+             russia:"Линия уральского металла, отечественной аддитивной техники и космического машиностроения естественно продолжается в международной орбитальной мастерской. Российский модуль — часть общего кольца станции.",
+             plots:["Кольцевая мастерская вращается над нетронутой ледяной поверхностью; внутри старый узел разбирается и становится новым без сброса отходов.","Кузнец в скафандре не бьёт молотом: он направляет рой роботов, а на его рукаве — маленький орнамент Златоуста как память ремесла.","Замкнутая петля деталей сияет тёплым цветом на фоне холодного Ганимеда; между станцией и поверхностью остаётся широкая пустота запрета."], refs:["K5","M8","M9"]}
+          ]}
+        ]
+      },
+      {
+        id:"fashion", index:"04", name:"Мода", line:"одеваюсь → сообщаю о себе → настраиваю вторую кожу",
+        thesis:"Одежда хранит климат, труд, статус, политику и желание быть увиденным. Российская линия особенно выразительна там, где региональная традиция встречается с реформой, фабрикой, авангардом и новой экологической ответственностью.",
+        palette:["#d64252","#f0b55a","#1d5b64","#563a72"],
+        eras:[
+          {id:"past", title:"Прошлое", intro:"Костюм как региональный язык, одежда как государственная реформа и ткань как массовый промышленный образ — три разных механизма моды до XX века.", murals:[
+            {id:"F01", date:"Россия · XVI–XIX века", title:"Костюм говорит, откуда ты", thesis:"Крой, головной убор и орнамент превращают одежду в карту возраста, семьи и места.",
+             description:"Русский традиционный костюм не сводится к паре «сарафан и кокошник». Существовали сарафанный, понёвный и другие комплексы, десятки локальных вариантов, разные материалы, техники, возрастные и семейные коды.",
+             importance:"Мурал противостоит усреднённому «народному стилю». Он показывает культуру как живую систему различий: человек считывал по одежде происхождение, статус и этап жизни, а вещь передавала память рук.",
+             russia:"Российский этнографический музей даёт точную типологию северных, центральных и южных вариантов. В композиции стоит показать несколько регионов и обязательно мужской костюм, а не только праздничный женский образ.",
+             plots:["Пять силуэтов стоят как меридианы карты России; внутри каждого — точный фрагмент кроя и орнамента своего региона, без смешения деталей.","Одна женщина показана в трёх возрастах: девичий венец, свадебный головной убор, зрелый костюм; одежда рассказывает биографию без текста.","Нить выходит из льняного поля, проходит через прялку, ткацкий стан и вышивку, а затем обводит контур человека — материал становится идентичностью."], refs:["F1"]},
+            {id:"F02", date:"Москва — Петербург · 1698–1701", title:"Государство меняет силуэт", thesis:"Указы Петра I делают европейское платье видимым знаком реформы и власти.",
+             description:"После Великого посольства Пётр вводил европейский покрой для значительной части городского и служилого общества. Одежда стала политическим инструментом: новый силуэт дисциплинировал тело и публично обозначал участие в преобразованиях.",
+             importance:"Мода здесь не свободный каприз, а конфликт между предписанием, привычкой и обменом. Мурал позволяет говорить о модернизации без простой пары «старое плохое — новое хорошее».",
+             russia:"Камзол Петра из коллекции ГИМ и тексты указов дают предметную точность. Крестьянство и духовенство имели исключения — эту неоднородность важно не стирать.",
+             plots:["Городские ворота работают как зеркало: человек входит в длиннополой одежде, выходит в европейском костюме, но его тень сохраняет оба силуэта.","Портной снимает мерку с чиновника, а за ними текст указа превращается в выкройку — закон буквально входит в ткань.","Два гардероба не сталкиваются, а прошиваются общей нитью; на швах видны Амстердам, Москва и новый Петербург как точки обмена."], refs:["F2"]},
+            {id:"F03", date:"Иваново · XVIII–XIX века", title:"Узор выходит на улицу", thesis:"Набойка и машинная печать превращают редкий рисунок в массовую ткань.",
+             description:"Ивановское текстильное производство прошло путь от ручной набойки деревянной доской до машинной печати. Орнаменты впитывали восточные, европейские и местные мотивы, перерабатывая их в узнаваемый язык русского ситца.",
+             importance:"Массовость демократизирует цвет и рисунок, но одновременно связывает моду с фабричным трудом и рынком. Мурал показывает, что «народный» орнамент часто рождается не в изоляции, а в долгом культурном переводе.",
+             russia:"Иваново — точный городской адрес текстильной истории. Можно цитировать реальные музейные образцы, но не копировать один раппорт целиком: важнее показать переход от руки набойщика к тиражу.",
+             plots:["Деревянная манера ударяет по белой ткани; от каждого удара рисунок расширяется, пока не заполняет одежду целой городской улицы.","Фабричный вал вращается как большое колесо цвета; рядом видны руки красильщика, рисовальщика и ткачихи — коллективный автор узора.","Восточный мотив проходит через несколько рамок переработки и становится ивановским ситцем; границы влияний показаны как диалог, не заимствование-украшение."], refs:["F3"]}
+          ]},
+          {id:"present", title:"Настоящее", intro:"Советский авангард проектирует одежду для нового быта, Дом моделей возвращает индивидуальный авторский голос, а современность соединяет локальную идентичность с экологией и цифровым проектированием.", murals:[
+            {id:"F04", date:"Москва · 1920-е", title:"Одежду начинают проектировать", thesis:"Ламанова, Мухина, Попова и Степанова соединяют искусство, функцию и массовое производство.",
+             description:"В 1920-е Надежда Ламанова и Вера Мухина искали современную одежду из доступных материалов, а Любовь Попова и Варвара Степанова переносили конструктивистский метод в ткань и спортивный костюм. Это не единая школа, а параллельные ответы на общий вопрос нового быта.",
+             importance:"Мода перестаёт быть только украшением элиты: дизайнер думает о движении, производстве, цене и тиражировании. При этом утопический проект сталкивается с возможностями фабрик и реальными вкусами людей.",
+             russia:"Коллекция Ламановой и Мухиной получила признание в Париже в 1925 году; ткани Поповой и Степановой действительно шли в производство. Женщины-художницы здесь — не фон, а главные действующие лица.",
+             plots:["Четыре рабочих стола образуют крест: выкройка, вышивка, геометрический принт, спортивный костюм; в центре встречаются руки авторов.","Фигура в простом холщовом платье проходит через вращающийся конструктивистский орнамент и выходит в функциональной городской одежде.","Парижская витрина и московский фабричный цех соединены одной тканью; аплодисменты на выставке не заслоняют труд производства."], refs:["F4","F5"]},
+            {id:"F05", date:"Москва · 1944–1990-е", title:"Дом моделей создаёт образы страны", thesis:"Между промышленной коллекцией и авторской модой возникает сложная система советского дизайна.",
+             description:"Общесоюзный дом моделей и региональные дома проектировали коллекции, методические образцы и журналы для промышленности. Позднее Вячеслав Зайцев превратил русские мотивы в узнаваемый авторский язык и вывел отечественного модельера в публичное пространство.",
+             importance:"Сюжет разрушает миф, будто в СССР «не было моды». Она существовала между планом, дефицитом, показом, домашним шитьём и индивидуальным изобретательством — часто с большим расстоянием между подиумом и магазином.",
+             russia:"Кузнецкий Мост, ивановская школа текстиля и творчество Зайцева дают многослойную географию. Русский стиль следует показывать как интерпретацию, а не буквальное надевание музейного костюма.",
+             plots:["Один подиум продолжается в конструкторский стол, фабричный цех и очередь магазина; один образ проходит все четыре пространства и меняется.","Зайцев раскладывает традиционный костюм на цвет, линию плеча, объём и ритм; из этих элементов возникает современный силуэт без прямой копии.","Разворот журнала мод становится окном: с одной стороны идеальная модель, с другой — женщина, которая по выкройке создаёт собственную версию."], refs:["F6","F3"]},
+            {id:"F06", date:"Россия · 2000–2020-е", title:"Стиль становится множественным", thesis:"Современная одежда соединяет локальные коды, новые тела, цифровой эскиз и повторное использование.",
+             description:"Сегодня нет одного центра, диктующего образ страны. Региональные бренды, ремесленные мастерские, независимые дизайнеры и цифровые платформы по-разному работают с традицией, городской повседневностью, гендером, размерным рядом и переработанными материалами.",
+             importance:"Мурал делает видимым право на множество тел и идентичностей. Устойчивость здесь не эстетический цвет, а прозрачность происхождения, достойный труд, долгий срок службы и возможность ремонта.",
+             russia:"Многонациональность России позволяет уйти от единственного «русского» мотива. Источником становится не узор как бесплатный декор, а сотрудничество с носителями традиции и понимание конкретного происхождения техники.",
+             plots:["Длинная городская скамья как подиум: люди разного возраста и телосложения носят вещи с точными локальными кодами, но остаются современными.","Цифровая выкройка проецируется на старую вещь; мастер не уничтожает её, а достраивает новый предмет, сохраняя видимый фрагмент прошлого.","Карта России составлена из ярлыков происхождения — материал, мастер, место, ремонт; каждый ярлык соединён с конкретной одеждой и человеком."], refs:["F1","F7"]}
+          ]},
+          {id:"future", title:"Будущее", intro:"Будущая мода не обязана производить больше образов. Она может продлевать жизнь материала, адаптироваться к человеку и климату и стать защитным интерфейсом для жизни далеко от Земли.", murals:[
+            {id:"F07", date:"Сценарий · 2035+", title:"У вещи нет последней коллекции", thesis:"Одежда проектируется для ремонта, разборки и возвращения волокна в оборот.",
+             description:"Циклический гардероб имеет паспорт состава, сменные узлы и понятную историю ухода. Дизайнер отвечает не только за первый образ, но и за пятую починку, нового владельца и разбор материала после долгой службы.",
+             importance:"Мурал меняет само представление о новизне: ценность может расти вместе с историей вещи. Это ответ на ресурсный и химический след текстильной отрасли, но также способ вернуть уважение к уходу и ремеслу.",
+             russia:"Российская традиция бережного переделывания, штопки и домашнего шитья может встретиться с современным паспортом изделия и инфраструктурой переработки. Прошлое здесь — не бедность, а знание долговечности.",
+             plots:["Одно пальто показано в четырёх возрастах: новое, отремонтированное, переданное, разобранное на волокно; каждый этап красив и равноправен.","Шов крупным планом становится городской дорогой к мастерским ремонта, обмена и переработки — инфраструктура спрятана внутри детали.","Бирка вещи раскрывается как родословная: поля льна, фабрика, владелец, мастер ремонта и новый материал соединены одной нитью."], refs:["F7","E7"]},
+            {id:"F08", date:"Сценарий · климат России 2040+", title:"Одежда настраивает микроклимат", thesis:"Один адаптивный слой заменяет несколько вещей и бережёт тело от резких перепадов среды.",
+             description:"Текстиль будущего может менять теплоизоляцию, вентиляцию и видимость, реагировать на состояние человека и ремонтировать отдельные функциональные слои. Он не должен превращать владельца в источник коммерческих данных без согласия.",
+             importance:"Для страны с диапазоном от арктического холода до южной жары адаптивная одежда — вопрос мобильности, труда и здоровья. Главная инновация измеряется комфортом и безопасностью, а не количеством датчиков.",
+             russia:"Опорой могут стать северные практики многослойности, отечественное материаловедение и опыт защитной одежды. Традиционные решения показываются как инженерное знание климата, а не экзотический декор.",
+             plots:["Один человек проходит четыре российских сезона; структура его плаща меняется как живая диаграмма, но внешний образ остаётся спокойным.","Разрез ткани увеличен до ландшафта: поры открываются, воздушные камеры поднимаются, повреждённая нить замыкается — функция видна без фантастической брони.","Мастерица Севера и инженер будущего держат разные края одного полотна; традиционная многослойность переходит в управляемую структуру."], refs:["F1","K6"]},
+            {id:"F09", date:"Сценарий · Ганимед", title:"Вторая кожа далёкого дома", thesis:"Внеземная одежда защищает, общается со средой и сохраняет культурную индивидуальность.",
+             description:"В поселении на Ганимеде одежда объединяет терморегуляцию, дозиметрию, связь, поддержку мышц и аварийную герметизацию. Но даже полностью функциональная оболочка остаётся человеческой: цвет, знак и личная память не менее важны для психологической устойчивости.",
+             importance:"Финал не превращает всех в одинаковых астронавтов. Технология должна поддерживать различия и достоинство, а жизненно важные функции — быть ремонтируемыми, понятными и доступными каждому жителю.",
+             russia:"Российский опыт космических скафандров и многонациональная культура орнамента дают две линии — инженерную и гуманитарную. Их соединение уместно только без буквального переноса сакральных узоров на утилитарный костюм.",
+             plots:["В общем модуле жители снимают одинаковые защитные оболочки, а под ними видны разные персональные слои — функция общая, идентичность индивидуальна.","Шов аварийно закрывает прокол и одновременно загорается знаком маршрута к шлюзу; орнамент становится интерфейсом, не украшением.","Силуэт человека на фоне Юпитера составлен из множества маленьких знаков мест Земли; одежда несёт дом туда, где дома ещё нет."], refs:["T6","M9","F1"]}
+          ]}
+        ]
+      },
+      {
+        id:"transport", index:"05", name:"Транспорт", line:"след → сеть → межпланетная траектория",
+        thesis:"Транспорт меняет не только скорость. Он определяет, какие места доступны, где возникают города, кто может участвовать в общей жизни и какой след движение оставляет в ландшафте.",
+        palette:["#d95632","#2e7890","#d5b34d","#27302d"],
+        eras:[
+          {id:"past", title:"Прошлое", intro:"Река и зимник используют ритм ландшафта, ямская сеть стандартизирует смену лошадей, железная дорога подчиняет путь расписанию и связывает континент.", murals:[
+            {id:"T01", date:"Русь · IX–XIII века", title:"Дорога течёт и замерзает", thesis:"Река, волок и зимний путь образуют первую сезонную транспортную систему.",
+             description:"На равнинах Восточной Европы вода была естественной дорогой, а между бассейнами суда и грузы переносили по волокам. Зимой санный путь открывал другие связи. Транспорт следовал сезону и рельефу, а не прокладывал независимую линию поверх них.",
+             importance:"Мурал показывает мобильность как знание среды: глубины, течения, льда, перевала и безопасной стоянки. Возникновение торговых городов связано с такими узлами движения.",
+             russia:"Ладога, Волхов и Новгород дают археологически и исторически насыщенный российский адрес. Скандинавы, славяне, финно-угорские народы и другие участники путей должны быть показаны как взаимодействующее, а не однородное пространство.",
+             plots:["Один ландшафт разделён сезонами: летом лодка идёт по реке, зимой сани продолжают тот же маршрут по льду, а волок соединяет два уровня.","Корабль показан не в бою, а нагруженным товарами; его команда тянет судно по волоку вместе с местными проводниками.","Синяя линия реки и белая линия зимника переплетаются и образуют контур будущей транспортной сети России."], refs:["T1"]},
+            {id:"T02", date:"Россия · XV–XVIII века", title:"Расстояние делится на станции", thesis:"Ямская гоньба превращает путь в сеть смены лошадей, людей и ответственности.",
+             description:"Ямская система опиралась на станции, подводы, проводников и регламентированную повинность. Скорость создавалась не чудесным конём, а повторяемостью: путник мог менять уставших животных и продолжать движение.",
+             importance:"Это ранний принцип транспортной инфраструктуры и сервиса. Путь работает, когда следующая станция готова принять эстафету; за удобством государства и почты стоит труд ямщиков и содержание дорог.",
+             russia:"История ямской гоньбы документирована русским законодательством. Тройка может появиться лишь как поздний эмоциональный акцент; основа композиции — станция, дорожная карта и люди службы.",
+             plots:["Эстафета письма: оно остаётся в центре, а лошади, ямщики и пейзаж сменяются вокруг него от станции к станции.","Панорама тракта разбита верстовыми столбами на ритмические секции; каждая секция — отдельная сцена труда и отдыха.","Колесо экипажа превращается в циферблат, где каждый сектор — новая станция; скорость показана как организация времени."], refs:["T2"]},
+            {id:"T03", date:"Россия · 1837–1916", title:"Страна входит в расписание", thesis:"Железная дорога создаёт единое время пути и новый масштаб связности.",
+             description:"От Царскосельской дороги до завершения Транссиба железная сеть радикально изменила перевозки людей, сырья, почты и идей. Она породила вокзалы, железнодорожные города и новую дисциплину точного отправления.",
+             importance:"Рельсы уменьшают экономическое расстояние, но прокладывают жёсткий коридор через ландшафты и жизни. Мурал соединяет восторг скорости с трудом строителей и необратимостью инфраструктурного выбора.",
+             russia:"Царскосельский поезд, паровозы Черепановых и Великий Сибирский путь дают три возможных масштаба. Для этой серии сильнее всего Транссиб как линия, соединяющая Европейскую Россию, Сибирь и Дальний Восток.",
+             plots:["Рельсы выходят из карманных часов и идут через всю стену; вдоль линии вырастают вокзалы, мастерские и города.","Строители на переднем плане передают шпалу из рук в руки, а далеко позади первый поезд пересекает уже собранный континент.","Один вагон показан в разрезе: пассажиры разных сословий, почта, товары и идеи едут рядом, но в неравных условиях."], refs:["T3","E3"]}
+          ]},
+          {id:"present", title:"Настоящее", intro:"Современная мобильность строится на трёх российских образах: город под землёй, научно рассчитанный полёт и ракета, превратившая транспорт в космическую задачу.", murals:[
+            {id:"T04", date:"Москва · с 1935", title:"Город получает второй уровень", thesis:"Метро превращает массовое перемещение в архитектуру общего пространства.",
+             description:"Первая очередь Московского метро открылась 15 мая 1935 года. Система сочетала инженерную инфраструктуру, высокую пропускную способность и образ «дворца для всех»; во время войны станции служили и убежищами.",
+             importance:"Метро — пример того, как транспорт становится частью гражданской идентичности. Но его подлинная ценность не в мраморе отдельно, а в ежедневной доступности, частоте, понятной навигации и общем времени горожан.",
+             russia:"Архитектура первых станций даёт мгновенно узнаваемый московский образ. В композиции стоит соединить красоту зала с проходчиками, диспетчерами и потоком пассажиров, чтобы памятник не заслонил систему.",
+             plots:["Москва в разрезе: над землёй улицы, под ней сияющая линия метро; станции работают как общие комнаты огромного дома.","Один и тот же зал в трёх временах — открытие 1935 года, убежище 1941-го, сегодняшний час пик; архитектура хранит разные роли.","Пассажирский поток показан как цветные нити, которые сходятся в узле пересадки и ткут карту города."], refs:["T4"]},
+            {id:"T05", date:"Россия · XX–XXI века", title:"Воздух становится дорогой", thesis:"Жуковский, ЦАГИ и школа Туполева превращают мечту о полёте в повторяемую инженерную систему.",
+             description:"Теория крыла, аэродинамические трубы, цельнометаллический самолёт и испытательная культура сделали авиацию надёжным транспортом. За именем конструктора стоит связка науки, производства, экипажа и наземных служб.",
+             importance:"Самолёт сокращает огромные российские расстояния, но требует высочайшей безопасности и оставляет значимый экологический след. Современный сюжет должен держать вместе доступность удалённых регионов и поиск более чистого полёта.",
+             russia:"Жуковский, основанный им ЦАГИ и конструкторская линия Туполева дают отечественную преемственность. Вместо парада моделей лучше показать путь от воздушного потока в трубе до пассажирского маршрута.",
+             plots:["Дымовые струи в аэродинамической трубе обтекают модель крыла и продолжаются настоящими маршрутами над картой России.","Жуковский и молодой Туполев стоят не как два памятника: между ними команда у чертежа, а за ней первый металлический АНТ-2 и пассажирский Ту-104.","Крыло самолёта превращается в мост между северным посёлком и большим городом; на мосту видны врач, ребёнок, почта и груз."], refs:["T5"]},
+            {id:"T06", date:"СССР / Россия · 1957–сегодня", title:"Дорога отрывается от Земли", thesis:"Королёв и его команда превращают ракету в транспорт к орбите и человеку в космосе.",
+             description:"Под руководством Сергея Королёва были осуществлены запуск первого спутника и полёт Юрия Гагарина. Практическая космонавтика выросла из ракетной программы эпохи холодной войны — этот двойной исторический контекст нельзя стирать.",
+             importance:"Космический транспорт меняет предел доступного, но требует колоссального коллективного труда и риска. Мурал переводит знаменитое «Поехали!» из мгновения старта в длинную цепь расчёта, испытаний и ответственности.",
+             russia:"Королёв, Гагарин, ракета Р-7 и семейство «Союз» — центральные российские образы. Но на стене должны быть видимы и безымянные инженеры, монтажники, медики, связисты — космос как совместное дело.",
+             plots:["Ракета стоит в центре не вертикальным монументом, а вершиной пирамиды из сотен рук и профессий, каждая держит свой участок системы.","След «Союза» поднимается с Земли и становится орбитальной линией; вдоль неё — спутник, корабль, станция, международная стыковка.","Королёв и Гагарин разделены стеклом испытательного зала; между их взглядами отражается вся команда и будущая дорога к Ганимеду."], refs:["T6","M5"]}
+          ]},
+          {id:"future", title:"Будущее", intro:"Будущее транспорта — не одна сверхмашина, а бесшовная система: автономный город, бережный континентальный маршрут и межпланетный перелёт, где надёжность важнее эффектной скорости.", murals:[
+            {id:"T07", date:"Сценарий · город 2035+", title:"Маршрут собирается вокруг человека", thesis:"Автономный транспорт работает как единая доступная сеть, а не набор конкурирующих машин.",
+             description:"Высокоавтоматизированные автомобили, трамваи, метро, речные маршруты и беспилотная доставка могут обмениваться данными и подстраиваться под спрос. Главная единица проектирования — не транспортное средство, а безопасная поездка от двери до двери.",
+             importance:"Будущее имеет смысл, если уменьшает аварийность, пробки, выбросы и транспортное неравенство. Автономность не должна лишать человека выбора, приватности или возможности получить помощь.",
+             russia:"Российские проекты беспилотных логистических коридоров, автономного судовождения и цифровой транспортной системы дают сегодняшний фундамент. Сюжет можно посадить в узнаваемый район крупного города и пригород.",
+             plots:["Одна поездка ребёнка в школу проходит через двор, автономный шаттл и метро без видимых разрывов; система бережно сопровождает, но не наблюдает лишнего.","Городская карта выглядит как живая ткань: маршруты утолщаются по спросу, освобождая улицы для деревьев, пешеходов и трамвая.","Диспетчер будущего показан не в пустом центре управления, а рядом с пассажирами; ИИ предлагает решения, человек отвечает за исключения."], refs:["T7","T4"]},
+            {id:"T08", date:"Сценарий · Россия 2040+", title:"Континент едет на чистой энергии", thesis:"Скоростная железнодорожная ось и северный морской путь дополняют друг друга, не соревнуясь за один образ будущего.",
+             description:"Для огромной территории нужны разные режимы: быстрые пассажирские связи между крупными городами, надёжные региональные линии, грузовая железная дорога и арктическое судоходство. Единая цифровая координация сокращает пустые пробеги и ожидание.",
+             importance:"Мурал спорит с идеей, что скорость сама по себе равна прогрессу. Ценность — в доступности малых городов, устойчивом снабжении Севера, низком углеродном следе и резервировании маршрутов.",
+             russia:"Транссиб, БАМ, будущие высокоскоростные магистрали и Северный морской путь складываются в специфически российскую мультимодальную карту. Экология Арктики должна быть таким же заметным слоем, как инфраструктура.",
+             plots:["Две линии — железнодорожная и морская — обнимают контур России; между ними короткие региональные связи не дают карте превратиться в две магистральные стрелы.","Грузовой контейнер путешествует без разрыва: поезд, порт, ледовый класс, северный посёлок; на каждом этапе виден источник энергии.","Старый Транссиб и новая скоростная линия показаны как древесные кольца: инфраструктура не стирает прошлое, а наращивает следующий слой."], refs:["T3","E8","T7"]},
+            {id:"T09", date:"Сценарий · Земля — Ганимед", title:"Маршрут длиной в годы", thesis:"Межпланетный транспорт становится цепью орбит, дозаправки, ремонта и автономных решений.",
+             description:"Полёт к системе Юпитера не похож на прямую линию на плакате: современные миссии используют гравитационные манёвры и многолетнюю навигацию. Будущий пассажирский или грузовой маршрут потребует энергетических узлов, радиационной защиты и ремонта без помощи Земли.",
+             importance:"Финал всей транспортной темы ставит надёжность выше рекорда. Каждый участок дороги должен иметь запасной сценарий, а экспедиция — право отказаться от посадки, если научные или этические риски слишком велики.",
+             russia:"Линия Циолковского, Келдыша, Королёва и «Союза» может продолжиться российским вкладом в международный транспортный модуль. Это не «русский Ганимед», а общая дорога с узнаваемой отечественной инженерной школой.",
+             plots:["Маршрут показан как музыкальная партитура: старт, разгон, гравитационные манёвры, спячка, ремонт, торможение; Земля и Ганимед — лишь первая и последняя ноты.","Эстафета транспортных форм от ладьи и тройки до поезда, самолёта и корабля; последнюю деталь передаёт не герой, а команда разных стран.","Окно корабля обрамлено схемой резервных контуров; впереди Ганимед и Юпитер, а в отражении стекла — лица экипажа и маленькая Земля."], refs:["M8","M9","T6","M5"]}
+          ]}
+        ]
+      }
+    ];
+
+    const eraNames = {past:"Прошлое", present:"Настоящее", future:"Будущее"};
+    const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
+
+    function renderRef(id) {
+      const source = SOURCES[id];
+      if (!source) return "";
+      return `<a class="ref" href="${escapeHTML(source.url)}" target="_blank" rel="noopener" title="${escapeHTML(source.title)}">${escapeHTML(id)} · ${escapeHTML(source.org)}</a>`;
+    }
+
+    function renderMural(mural, eraId) {
+      const searchText = [mural.id, mural.title, mural.thesis, mural.date, mural.description, mural.importance, mural.russia, ...mural.plots].join(" ").toLowerCase();
+      return `<details class="mural" data-era="${eraId}" data-search="${escapeHTML(searchText)}">
+        <summary>
+          <span class="mural-no">${escapeHTML(mural.id)}</span>
+          <span class="mural-title">${escapeHTML(mural.title)}</span>
+          <span class="mural-thesis">${escapeHTML(mural.thesis)}</span>
+          <span class="mural-date">${escapeHTML(mural.date)}</span>
+          <span class="plus" aria-hidden="true"></span>
+        </summary>
+        <div class="detail">
+          <div class="detail-grid">
+            <div class="detail-block"><span class="micro">Тема и исторический ракурс</span><p>${escapeHTML(mural.description)}</p></div>
+            <div class="detail-block"><span class="micro">Почему это важно</span><p>${escapeHTML(mural.importance)}</p></div>
+            <div class="detail-block russia"><span class="micro">Связь с Россией</span><p>${escapeHTML(mural.russia)}</p></div>
+          </div>
+          <div class="plots">
+            <div class="plots-head"><h4>Три версии сюжета</h4><span>Можно выбрать одну или собрать гибрид</span></div>
+            <div class="plot-grid">
+              ${mural.plots.map((plot, index) => `<div class="plot"><b>${["Панорама","Человеческий план","Символический план"][index]}</b>${escapeHTML(plot)}</div>`).join("")}
+            </div>
+          </div>
+          <div class="refs"><span class="micro" style="width:100%;margin:0 0 2px">Опорные источники</span>${mural.refs.map(renderRef).join("")}</div>
+        </div>
+      </details>`;
+    }
+
+    function renderTheme(theme) {
+      return `<section class="theme" id="${theme.id}" data-theme="${theme.id}">
+        <header class="theme-head">
+          <div class="theme-index">${theme.index}</div>
+          <div><h2>${escapeHTML(theme.name)}</h2><div class="theme-line">${escapeHTML(theme.line)}</div><div class="palette">${theme.palette.map(color => `<i style="background:${color}"></i>`).join("")}</div></div>
+          <div class="theme-thesis"><strong>Кураторский тезис.</strong> ${escapeHTML(theme.thesis)}</div>
+        </header>
+        ${theme.eras.map(era => `<section class="era" data-era="${era.id}">
+          <div class="era-head"><div class="era-label">${eraNames[era.id]} · 3 мурала</div><div class="era-intro">${escapeHTML(era.intro)}</div></div>
+          <div class="mural-list">${era.murals.map(mural => renderMural(mural, era.id)).join("")}</div>
+        </section>`).join("")}
+      </section>`;
+    }
+
+    document.getElementById("themeNav").innerHTML = THEMES.map(theme => `<a href="#${theme.id}"><span>${theme.index} · 9 муралов</span><b>${escapeHTML(theme.name)}</b></a>`).join("");
+    document.getElementById("content").innerHTML = THEMES.map(renderTheme).join("");
+    document.getElementById("sourceList").innerHTML = Object.entries(SOURCES).map(([id, source]) => `<a class="source-card" href="${escapeHTML(source.url)}" target="_blank" rel="noopener"><span class="source-id">${id} · ${escapeHTML(source.group)}</span><b>${escapeHTML(source.title)}</b><span>${escapeHTML(source.org)} ↗</span></a>`).join("");
+
+    const filters = [...document.querySelectorAll(".filter")];
+    const search = document.getElementById("search");
+    const empty = document.getElementById("empty");
+    let activeEra = "all";
+
+    function applyFilters() {
+      const query = search.value.trim().toLowerCase();
+      let totalVisible = 0;
+      document.querySelectorAll(".theme").forEach(theme => {
+        let themeVisible = 0;
+        theme.querySelectorAll(".era").forEach(era => {
+          let eraVisible = 0;
+          era.querySelectorAll(".mural").forEach(mural => {
+            const eraMatch = activeEra === "all" || mural.dataset.era === activeEra;
+            const searchMatch = !query || mural.dataset.search.includes(query);
+            mural.hidden = !(eraMatch && searchMatch);
+            if (!mural.hidden) eraVisible++;
+          });
+          era.hidden = eraVisible === 0;
+          themeVisible += eraVisible;
+        });
+        theme.hidden = themeVisible === 0;
+        totalVisible += themeVisible;
+      });
+      empty.classList.toggle("visible", totalVisible === 0);
+    }
+
+    filters.forEach(button => button.addEventListener("click", () => {
+      activeEra = button.dataset.era;
+      filters.forEach(item => item.classList.toggle("active", item === button));
+      applyFilters();
+    }));
+    search.addEventListener("input", applyFilters);
+
+    const expand = document.getElementById("expand");
+    let allOpen = false;
+    expand.addEventListener("click", () => {
+      allOpen = !allOpen;
+      document.querySelectorAll(".mural:not([hidden])").forEach(item => item.open = allOpen);
+      expand.textContent = allOpen ? "Свернуть всё" : "Раскрыть всё";
+    });
+    document.getElementById("print").addEventListener("click", () => window.print());
+
+    let openState = [];
+    window.addEventListener("beforeprint", () => {
+      openState = [...document.querySelectorAll(".mural")].map(item => item.open);
+      document.querySelectorAll(".mural:not([hidden])").forEach(item => item.open = true);
+    });
+    window.addEventListener("afterprint", () => {
+      document.querySelectorAll(".mural").forEach((item, index) => item.open = openState[index]);
+    });
+  </script>
+</body>
+</html>
