@@ -237,8 +237,34 @@
     .plots-head { display: flex; justify-content: space-between; gap: 20px; align-items: baseline; margin-bottom: 16px; }
     .plots-head h4 { margin: 0; font: 900 21px/1 var(--display); text-transform: uppercase; }
     .plots-head span { color: #9fa49f; font-size: 12px; }
-    .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .plot { border-top: 1px solid rgba(255,255,255,.25); padding-top: 13px; color: #cfd2cd; font-size: 13px; }
+    .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start; }
+    .plot { margin: 0; color: #cfd2cd; font-size: 13px; }
+    .plot-art {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 1138 / 2560;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.22);
+      background: #101412;
+      cursor: zoom-in;
+    }
+    .plot-art img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease, filter .35s ease; }
+    .plot-art:hover img, .plot-art:focus-visible img { transform: scale(1.018); filter: brightness(1.06); }
+    .plot-art:focus-visible { outline: 2px solid #e9997e; outline-offset: 3px; }
+    .plot-code {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 5px 7px;
+      color: #fff;
+      background: rgba(18,22,20,.82);
+      font: 800 10px/1 var(--display);
+      letter-spacing: .1em;
+      pointer-events: none;
+    }
+    .plot figcaption { border-top: 1px solid rgba(255,255,255,.25); padding-top: 11px; margin-top: 11px; }
     .plot b { display: block; color: #fff; font-family: var(--display); text-transform: uppercase; margin-bottom: 5px; }
     .refs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
     .ref { display: inline-flex; text-decoration: none; color: var(--ink-2); border: 1px solid var(--line); background: var(--paper); padding: 5px 8px; font-size: 11px; }
@@ -259,6 +285,36 @@
     .source-card span { font-size: 12px; color: #9ea39e; }
 
     footer { padding: 24px 0 55px; color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; gap: 20px; }
+
+    .art-viewer {
+      width: min(92vw, 760px);
+      max-width: none;
+      max-height: 94vh;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.25);
+      color: #f4f1e9;
+      background: #111513;
+      box-shadow: 0 30px 100px rgba(0,0,0,.6);
+    }
+    .art-viewer::backdrop { background: rgba(8,10,9,.9); backdrop-filter: blur(8px); }
+    .art-viewer figure { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+    .art-viewer img { display: block; width: 100%; max-height: calc(94vh - 58px); object-fit: contain; background: #090b0a; }
+    .art-viewer figcaption { min-height: 58px; padding: 14px 56px 14px 16px; color: #cfd2cd; font-size: 13px; }
+    .viewer-close {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff;
+      background: rgba(17,21,19,.88);
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
 
     @media (max-width: 1050px) {
       .hero-grid, .theme-head, .sources-head { grid-template-columns: 1fr; }
@@ -288,6 +344,7 @@
       .plus { grid-column: 3; grid-row: 1; }
       .detail { padding-left: 0; }
       .detail-grid, .plot-grid, .source-list { grid-template-columns: 1fr; }
+      .plot { width: min(100%, 430px); margin-inline: auto; }
       footer { flex-direction: column; }
     }
 
@@ -314,6 +371,9 @@
       .detail-grid, .plot-grid { grid-template-columns: repeat(3, 1fr); }
       .plots { color: #000; background: #f2f2f2; border: 1px solid #aaa; }
       .plot, .plot b, .plots-head span { color: #222; }
+      .plot-art { border-color: #aaa; cursor: default; }
+      .plot-code { color: #000; background: rgba(255,255,255,.85); }
+      .art-viewer { display: none !important; }
       .sources { color: #000; background: #fff; border-top-color: #000; }
       .sources-head p, .source-card span { color: #444; }
       .source-list { grid-template-columns: repeat(2, 1fr); background: #aaa; }
@@ -383,9 +443,17 @@
   </section>
 
   <footer class="shell">
-    <span>KSmelova_murals · версия 1.0 · август 2026</span>
-    <span>Материал предназначен для концептуальной и художественной разработки муралов ЖК «Ганимед».</span>
+    <span>KSmelova_murals · версия 2.0 · август 2026</span>
+    <span>135 визуальных эскизов предназначены для концептуальной и художественной разработки муралов ЖК «Ганимед».</span>
   </footer>
+
+  <dialog class="art-viewer" id="artViewer" aria-labelledby="viewerCaption">
+    <button class="viewer-close" id="viewerClose" type="button" aria-label="Закрыть полноэкранный просмотр">×</button>
+    <figure>
+      <img id="viewerImage" alt="">
+      <figcaption id="viewerCaption"></figcaption>
+    </figure>
+  </dialog>
 
   <noscript><div class="shell" style="padding:40px 0">Для просмотра исследовательских карточек включите JavaScript.</div></noscript>
 
@@ -732,7 +800,10 @@
       return `<a class="ref" href="${escapeHTML(source.url)}" target="_blank" rel="noopener" title="${escapeHTML(source.title)}">${escapeHTML(id)} · ${escapeHTML(source.org)}</a>`;
     }
 
-    function renderMural(mural, eraId) {
+    const mediaDirectories = {math:"mathematics", economy:"economics", smith:"blacksmith", fashion:"fashion", transport:"transport"};
+    const plotRoles = ["Панорама", "Человеческий план", "Символический план"];
+
+    function renderMural(mural, eraId, themeId) {
       const searchText = [mural.id, mural.title, mural.thesis, mural.date, mural.description, mural.importance, mural.russia, ...mural.plots].join(" ").toLowerCase();
       return `<details class="mural" data-era="${eraId}" data-search="${escapeHTML(searchText)}">
         <summary>
@@ -749,9 +820,21 @@
             <div class="detail-block russia"><span class="micro">Связь с Россией</span><p>${escapeHTML(mural.russia)}</p></div>
           </div>
           <div class="plots">
-            <div class="plots-head"><h4>Три версии сюжета</h4><span>Можно выбрать одну или собрать гибрид</span></div>
+            <div class="plots-head"><h4>Три версии сюжета</h4><span>Вертикальные эскизы · 1138 × 2560</span></div>
             <div class="plot-grid">
-              ${mural.plots.map((plot, index) => `<div class="plot"><b>${["Панорама","Человеческий план","Символический план"][index]}</b>${escapeHTML(plot)}</div>`).join("")}
+              ${mural.plots.map((plot, index) => {
+                const variant = String(index + 1).padStart(2, "0");
+                const code = `${mural.id}-${variant}`;
+                const src = `media/murals/${mediaDirectories[themeId]}/${code}.webp`;
+                const alt = `${code}. ${plotRoles[index]}. ${plot}`;
+                return `<figure class="plot">
+                  <button class="plot-art" type="button" data-art-src="${src}" data-art-caption="${escapeHTML(alt)}" aria-label="Открыть эскиз ${code} крупно">
+                    <img src="${src}" width="1138" height="2560" loading="lazy" decoding="async" alt="${escapeHTML(alt)}">
+                    <span class="plot-code">${code}</span>
+                  </button>
+                  <figcaption><b>${plotRoles[index]}</b>${escapeHTML(plot)}</figcaption>
+                </figure>`;
+              }).join("")}
             </div>
           </div>
           <div class="refs"><span class="micro" style="width:100%;margin:0 0 2px">Опорные источники</span>${mural.refs.map(renderRef).join("")}</div>
@@ -768,7 +851,7 @@
         </header>
         ${theme.eras.map(era => `<section class="era" data-era="${era.id}">
           <div class="era-head"><div class="era-label">${eraNames[era.id]} · 3 мурала</div><div class="era-intro">${escapeHTML(era.intro)}</div></div>
-          <div class="mural-list">${era.murals.map(mural => renderMural(mural, era.id)).join("")}</div>
+          <div class="mural-list">${era.murals.map(mural => renderMural(mural, era.id, theme.id)).join("")}</div>
         </section>`).join("")}
       </section>`;
     }
@@ -819,6 +902,27 @@
       expand.textContent = allOpen ? "Свернуть всё" : "Раскрыть всё";
     });
     document.getElementById("print").addEventListener("click", () => window.print());
+
+    const artViewer = document.getElementById("artViewer");
+    const viewerImage = document.getElementById("viewerImage");
+    const viewerCaption = document.getElementById("viewerCaption");
+    document.getElementById("content").addEventListener("click", event => {
+      const trigger = event.target.closest("[data-art-src]");
+      if (!trigger) return;
+      viewerImage.src = trigger.dataset.artSrc;
+      viewerImage.alt = trigger.dataset.artCaption;
+      viewerCaption.textContent = trigger.dataset.artCaption;
+      artViewer.showModal();
+    });
+    document.getElementById("viewerClose").addEventListener("click", () => artViewer.close());
+    artViewer.addEventListener("click", event => {
+      if (event.target === artViewer) artViewer.close();
+    });
+    artViewer.addEventListener("close", () => {
+      viewerImage.removeAttribute("src");
+      viewerImage.alt = "";
+      viewerCaption.textContent = "";
+    });
 
     let openState = [];
     window.addEventListener("beforeprint", () => {
